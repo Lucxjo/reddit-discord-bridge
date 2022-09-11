@@ -14,7 +14,7 @@ fetchSubredditData(config()[0].subreddit_name).then(async (data) => {
 			Deno.writeTextFileSync(
 				"./data/subreddits.json",
 				JSON.stringify({
-					[config()[0].subreddit_name]: data.id,
+					[config()[0].subreddit_name]: [data.id],
 				})
 			);
 		}
