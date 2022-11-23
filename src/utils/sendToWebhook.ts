@@ -4,7 +4,17 @@ import fetchSubredditData from "./fetchSubredditData.ts";
 const sendToWebhook = async (subreddit: string) => {
 	const data = await fetchSubredditData(subreddit);
 
+	let embed_colour = config()[0].embed_colour ?? config()[0].embed_color;
+
+	if (embed_colour !== undefined) {
+		if (embed_colour.startsWith("#") || embed_colour.startsWith("0x")) {
+			if (embed_colour.startsWith("#")) embed_colour = embed_colour.replace("#", "0x");
+		} else 
+			throw new Error("Embed colour must start with # or 0x");
+	} else embed_colour = "0xf78316";
+
 	if (data) {
+		console.log(embed_colour);
 		const embed = {
 			title:
 				data.title.length >= 50
@@ -16,7 +26,7 @@ const sendToWebhook = async (subreddit: string) => {
 				? data.selftext.substring(0, 200) + "..."
 				: data.selftext,
 			url: `https://reddit.com${data.permalink}`,
-			color: 0xf78316,
+			color: parseInt(embed_colour),
 			fields: [
 				{
 					name: "Post Author",
@@ -29,8 +39,8 @@ const sendToWebhook = async (subreddit: string) => {
 			],
 			author: {
 				name: "Reddit-Discord Bridge",
-				url: "https://rdb.ludoviko.ch"
-			}
+				url: "https://rdb.ludoviko.ch",
+			},
 		};
 
 		if (data.thumbnail.includes("https://")) {
