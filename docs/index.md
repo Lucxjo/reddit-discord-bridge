@@ -26,8 +26,11 @@ Configuration is done through a single config file and must in the location of `
 [
 	{
 		"subreddit_name": "",
-		"discord_webhook_url": ""
+		"discord_webhook_url": "",
+		"embed_colour": ""
 	}
 ]
 ```
 Although the config is in an array of objects, only one object is currently supported. The array is in preparation for future support for multiple subreddits.
+
+The `embed_colour` field is optional and can be any valid hex colour. If not provided, the default colour will be used. This was introduced in v1.0.3.

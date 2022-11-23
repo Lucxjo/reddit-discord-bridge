@@ -11,6 +11,7 @@ const needToPost = async (subreddit: string, id: string) => {
 
 		if (parsed[subreddit] === id) return false;
 		else return true;
+	// deno-lint-ignore no-explicit-any
 	} catch (e: any) {
 		console.error(e);
 		if (e.code === "ENOENT") {
